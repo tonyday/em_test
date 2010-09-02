@@ -10,14 +10,13 @@ $stdout.sync = true
 EM.run do
   worker = Gearman::Worker.new('localhost')
 
-  # upper ability
   worker.add_ability('upper') do |data, job|
-    puts "data = #{data}"
-  #  puts "job = #{job.inspect}"
-    data.upcase
+    data.upcase!
+    File.open('processed.txt', 'a') { |file| file.puts(data) }
+    puts data
+    data
   end
 
-  # Running the workers
   worker.work
 end
 
