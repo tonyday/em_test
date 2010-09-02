@@ -20,6 +20,6 @@ EM.run do
 #      end
       taskset.add_task(task)
     end
-    client.run(taskset)
+    client.run(taskset, 0, true)
   end
 end

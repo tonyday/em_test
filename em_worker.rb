@@ -14,7 +14,7 @@ EM.run do
     data.upcase!
     File.open('processed.txt', 'a') { |file| file.puts(data) }
     puts data
-    data
+    nil
   end
 
   worker.work

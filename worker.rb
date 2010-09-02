@@ -9,9 +9,7 @@ worker.reconnect_sec = 2
 
 # upper ability
 worker.add_ability('upper') do |data, job|
-  puts "data = #{data}"
-  puts "job = #{job.inspect}"
-  data.upcase
+  puts data.upcase
 end
 
 # Running the workers
