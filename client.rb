@@ -4,22 +4,18 @@ require 'gearman'
 
 Signal.trap(:INT) { puts 'setting @stopped'; @stopped = true }
 
-#Gearman::Util.debug = true
-
-servers = ['localhost:4730', 'localhost:4731']
-
-client = Gearman::Client.new(servers)
+client = Gearman::Client.new('localhost')
 taskset = Gearman::TaskSet.new(client)
 
-while ! @stopped
-  puts 'More ...'
-  ('a'..'z').each do |letter|
-    data = "#{letter} - #{Time.now.strftime('%M:%S')}"
-    task = Gearman::Task.new('upper', data, :background => true)
-    taskset.add_task(task)
-  end
+n = 0
+while !@stopped
+  n += 1
+  data = sprintf("%07d - %s", n, Time.now.strftime('%M:%S'))
+  puts data
+  task = Gearman::Task.new('upper', data, :background => true)
+  taskset.add_task(task)
   taskset.wait(0)
-  sleep 5 unless @stopped
+#  sleep 0.1 unless @stopped
 end
 
 puts 'All done - thanks for playing'

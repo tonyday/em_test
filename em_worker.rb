@@ -12,7 +12,6 @@ EM.run do
 
   worker.add_ability('upper') do |data, job|
     data.upcase!
-    File.open('processed.txt', 'a') { |file| file.puts(data) }
     puts data
     nil
   end
